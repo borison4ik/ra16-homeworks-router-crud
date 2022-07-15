@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+import { PageLayout } from './components/Layout';
+import { Posts } from './pages/Posts';
+import { Post } from './pages/Post';
+import { CreatePost } from './pages/CreatePost';
+
+import { PostsProvider } from './contexts/PostsProvider';
+
+import './app.scss';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <PostsProvider>
+        <Routes>
+          <Route path='/' element={<PageLayout />}>
+            <Route index element={<Posts />} />
+            <Route path='/posts/:postId' element={<Post />} />
+            <Route path='/posts/new' element={<CreatePost />} />
+            <Route path='*' element={<Posts />} />
+          </Route>
+        </Routes>
+      </PostsProvider>
+    </>
   );
 }
 
